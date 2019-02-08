@@ -24,7 +24,7 @@ require_once("Models/Usuario.php");
 
 			setcookie("sesion",$datos,time()+3600);
 
-			header("location:/edsa-prueba-php");
+			header("location:/index.php");
 			exit();
 		}else{
 

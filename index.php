@@ -1,7 +1,8 @@
 <?php
 require_once("Models/Producto.php"); 
 require_once("Models/Categoria.php");
-
+	
+	session_start();
 	$producto = new Producto();
 
 	if ( isset($_POST["eliminar"]) ) {
@@ -51,8 +52,6 @@ require_once("Models/Categoria.php");
 		<div class="row">
 			<div class="col-12 col-md-6 offset-md-3 col-lg-6 offset-lg-3">
 			<?php 
-
-			session_start();
 
 
 			if (!isset($_SESSION["usuario"]) && isset($_COOKIE["sesion"]) ) {

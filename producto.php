@@ -16,9 +16,8 @@ require_once("Models/Categoria.php");
 
 	if (! isset($_SESSION["usuario"]) ) {
 
-		echo "Permiso no autorizado";
-		echo '<a href="login.php">iniciar sesión</a>';
-		die();
+		
+		$inautorizado = true;
 	}else{
 
 		$usuario = $_SESSION["usuario"];
@@ -153,8 +152,20 @@ require_once("Models/Categoria.php");
 	<div class="container">
 		<div class="row">
 			<div class="col-12 col-md-6 offset-md-3 col-lg-6 offset-lg-3">
-				
+	
+			<?php	
+
+				if ( isset($inautorizado) ) {
+			?>
+				<h1 class="text-center">Permiso no autorizado.</h1>
+				<a class="btn btn-link btn-lg text-primary" href="login.php">Haga Click aqui para iniciar sesión</a>
+
+			<?php die();	}else{ ?>
+
 				<h1 class="text-center font-weight-bold text-capitalize"><?php  if(isset($productoModificar)){ echo "Modificar Producto";}else{ echo "Nuevo Producto"; } ?></h1>
+
+			<?php	} ?>
+				
 				<?php 
 				// solo para mostrar un mensaje de error!
 
