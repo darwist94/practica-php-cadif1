@@ -1,6 +1,7 @@
 <?php
 require_once("Models/Producto.php"); 
 require_once("Models/Categoria.php"); 
+require_once("Helper.php");
 ?>
 <?php 
 	
@@ -35,30 +36,32 @@ require_once("Models/Categoria.php");
 		$existencia = $_POST["existencia"];
 		$imagen = $_FILES["imagen"];
 
+		$validar = new Helper;
+		print_r($_POST);
+		echo $validar->validator($_POST)->validate();
+		$valido = $validar->validator($_POST)->validate();
 
-		$valido = true;
-
-		if (!is_string($nombre) || is_numeric($nombre)) {
+		/*if (!is_string($nombre) || is_numeric($nombre)) {
 		
-			$mensajeError = "El campo nombre es invalido!";
+			$error = "El campo nombre es invalido!";
 			$valido = false;
 		
 		}elseif (!is_numeric($precio) || floatval($precio) < 0) {
 			
-			$mensajeError = "El campo precio es invalido!";
+			$error = "El campo precio es invalido!";
 			$valido = false;
 			
 		}elseif (!is_int(intval($existencia))) {
 			
-			$mensajeError = "El campo existencia es invalido!";
+			$error = "El campo existencia es invalido!";
 			$valido = false;
 
 		}elseif ($imagen["type"] != "image/jpeg" && $imagen["type"] != "image/jpg" && $imagen["type"] != "image/png"){
 			
-			$mensajeError = "Por favor adjunte una imagen con formato: JPG/JPEG/PNG!";
+			$error = "Por favor adjunte una imagen con formato: JPG/JPEG/PNG!";
 			$valido = false;
 
-			}
+			}*/
 
 		if ($valido) {
 
@@ -66,7 +69,7 @@ require_once("Models/Categoria.php");
 
 			if ($existeCodigo->rowCount() != 0) {
 
-				$mensajeError = "El codigo del producto ya existe!";
+				$error = "El codigo del producto ya existe!";
 
 			}else{
 				
@@ -169,7 +172,7 @@ require_once("Models/Categoria.php");
 				<?php 
 				// solo para mostrar un mensaje de error!
 
-				if( isset($mensajeError)){
+				if( isset($error)){
 				?>
 				<div class="alert alert-danger">
 					<div class="container">
@@ -180,7 +183,7 @@ require_once("Models/Categoria.php");
 							<i class="material-icons">clear</i>
 						</span>
 					</button>
-					<b><?php echo $mensajeError; ?></b>
+					<b><?php echo $error; ?></b>
 					
 				</div>
 				<?php } ?>

@@ -7,27 +7,34 @@ require_once("Models/Categoria.php");
 
 	if ( isset($_POST["eliminar"]) ) {
 
-			$productosEliminar = $_POST["idProductos"];
+			$productosEliminar = isset($_POST["idProductos"]) ? $_POST["idProductos"] : "";
 
 			//$productoE = new Producto(); 
-
-			foreach ($productosEliminar as $prod) {
+			if (!empty($productosEliminar)) {
 				
-				$producto->eliminar($prod);
+				foreach ($productosEliminar as $prod) {
+					
+					$producto->eliminar($prod);
 
+				}
+
+				$success = "Producto(s) eliminado(s) con exito!";
+
+			}else{
+
+				$warning = "debe seleccionar almenos un producto!";
 			}
-
-			$mensajeExito = "Producto(s) eliminado(s) con exito!";
+			
 		} 
 
 	if ( isset($_GET["registrado"]) ) {
 
-		$mensajeExito = "Producto registrado con exito!";
+		$success = "Producto registrado con exito!";
 	}
 
 	if ( isset($_GET["actualizado"]) ) {
 
-		$mensajeExito = "Producto actualizado con exito!";
+		$success = "Producto actualizado con exito!";
 	}
 ?>
 <!DOCTYPE html>
@@ -77,7 +84,7 @@ require_once("Models/Categoria.php");
 			?>
 			<?php 
 				// solo para mostrar un mensaje d exito!
-				if( isset($mensajeExito) ){
+				if( isset($success) ){
 				?>
 				<div class="alert alert-success">
 					<div class="container">
@@ -89,7 +96,26 @@ require_once("Models/Categoria.php");
 						</span>
 					</button>
 					<b>
-					<?php echo $mensajeExito; ?>
+					<?php echo $success; ?>
+					</b>
+				</div>
+				<?php } ?>
+
+				<?php 
+				// solo para mostrar un mensaje de alerta!
+				if( isset($warning) ){
+				?>
+				<div class="alert alert-warning">
+					<div class="container">
+						<div class="alert-icon"><i class="material-icons">warning</i></div>
+					</div>
+					<button type="button" class="close" data-dismiss="alert" aria-label="close">
+						<span aria-hidden="true">
+							<i class="material-icons">clear</i>
+						</span>
+					</button>
+					<b>
+					<?php echo $warning; ?>
 					</b>
 				</div>
 				<?php } ?>

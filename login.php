@@ -24,11 +24,11 @@ require_once("Models/Usuario.php");
 
 			setcookie("sesion",$datos,time()+3600);
 
-			header("location:/index.php");
+			header("location:index.php");
 			exit();
 		}else{
 
-			$mensajeError = "usuario o contraseña incorrecta!";
+			$error = "usuario o contraseña incorrecta!";
 			}
 			
 	}
@@ -43,9 +43,9 @@ require_once("Models/Usuario.php");
 		$insertado = $usuario->insertar($nombre,$login,$pass);
 
 		if ($insertado != 0) {
-			$mensajeExito = "Usuario registrado con exito!";
+			$success = "Usuario registrado con exito!";
 		}else{
-			$mensajeError = "Error al registrar al usuario!".$insertado;
+			$error = "Error al registrar al usuario!".$insertado;
 		}
 		
 	}
@@ -60,7 +60,7 @@ require_once("Models/Usuario.php");
 
 		setcookie("sesion","",time()-1000);
 
-		$mensajeExito = "Sesión cerrada con exito!";
+		$success = "Sesión cerrada con exito!";
 	}
 		
 ?>
@@ -87,7 +87,7 @@ require_once("Models/Usuario.php");
 				<?php 
 				// solo para mostrar un mensaje de error!
 
-				if( isset($mensajeError)){
+				if( isset($error)){
 				?>
 				<div class="alert alert-danger">
 					<div class="container">
@@ -98,14 +98,14 @@ require_once("Models/Usuario.php");
 							<i class="material-icons">clear</i>
 						</span>
 					</button>
-					<b><?php echo $mensajeError; ?></b>
+					<b><?php echo $error; ?></b>
 					
 				</div>
 				<?php } ?>
 
 				<?php 
 				// solo para mostrar un mensaje d exito!
-				if( isset($mensajeExito) ){
+				if( isset($success) ){
 				?>
 				<div class="alert alert-success">
 					<div class="container">
@@ -117,7 +117,7 @@ require_once("Models/Usuario.php");
 						</span>
 					</button>
 					<b>
-					<?php echo $mensajeExito; ?>
+					<?php echo $success; ?>
 					</b>
 				</div>
 				<?php } ?>
