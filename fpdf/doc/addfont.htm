@@ -9,10 +9,12 @@
 <h1>AddFont</h1>
 <code>AddFont(<b>string</b> family [, <b>string</b> style [, <b>string</b> file]])</code>
 <h2>Descripción</h2>
-Importa una fuente TrueType o Type1 y la hace disponible. Es necesario primero generar un archivo de definición de fuente con la utilidad makefont.php.
+Importa una fuente TrueType, OpenType o Type1 y la hace disponible. Es necesario primero generar
+un archivo de definición de fuente con la utilidad MakeFont.
 <br>
-El archivo de definición (y el archivo de fuente mismo cuando es incorporado) debe estar presente en el directorio de fuentes.
-Si no puede ser encontrado, es generado el error "Could not include font definition file".
+El archivo de definición (y el archivo de fuente mismo cuando es incorporado) debe estar presente
+en el directorio de fuentes. Si no puede ser encontrado, es generado el error "Could not include
+font definition file".
 <h2>Parámetros</h2>
 <dl class="param">
 <dt><code>family</code></dt>
@@ -46,7 +48,7 @@ es equivalente a:
 <pre><code>$pdf-&gt;AddFont('Comic','I','comici.php');</code></pre>
 </div>
 <h2>Vea además</h2>
-<a href="setfont.htm">SetFont()</a>.
+<a href="setfont.htm">SetFont</a>
 <hr style="margin-top:1.5em">
 <div style="text-align:center"><a href="index.htm">Inicio</a></div>
 </body>

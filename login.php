@@ -21,7 +21,6 @@ require_once("Models/Usuario.php");
 
 			$datos = json_encode($_SESSION["usuario"]);
 
-
 			setcookie("sesion",$datos,time()+3600);
 
 			header("location:index.php");
@@ -60,7 +59,6 @@ require_once("Models/Usuario.php");
 
 		setcookie("sesion","",time()-1000);
 
-		$success = "Sesión cerrada con exito!";
 	}
 		
 ?>

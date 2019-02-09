@@ -26,32 +26,41 @@ Class PDF extends FPDF{
 	    $this->Cell(0,10,'Pagina '.$this->PageNo(),0,0,'C');
 		}
 }
+	
 
-$pdf = new PDF();
+try {
+	$pdf = new PDF();
 
-$pdf->addPage();
+	$pdf->addPage();
 
-$producto = new Producto();
+	$producto = new Producto();
 
 
-$pdf->Cell(35,10,'PRODUCTO',1,0);
-$pdf->Cell(30,10,'PRECIO',1,0);
-$pdf->Cell(30,10,'IMAGEN',1,0);
-$pdf->Cell(30,10,'USUARIO',1,0);
-//Line break
-$pdf->Ln(10);
+	$pdf->Cell(35,10,'PRODUCTO',1,0);
+	$pdf->Cell(30,10,'PRECIO',1,0);
+	$pdf->Cell(30,10,'IMAGEN',1,0);
+	$pdf->Cell(30,10,'USUARIO',1,0);
+	//Line break
+	$pdf->Ln(10);
 
-$x = 75;
-$y = 42;
-foreach ($producto->leerTodos() as $prod) {
+	$x = 75;
+	$y = 42;
+	foreach ($producto->leerTodos() as $prod) {
+		
+			$pdf->Cell(35,18,$prod->descripcion,1,0);
+			$pdf->Cell(30,18,$prod->precio,1,0);
+			$pdf->Cell(30,18,$pdf->Image('imagenes/'.$prod->imagen,$x,$y,25,10),1,0,'C');
+			$pdf->Cell(30,18,$prod->nombre,1,0);
+			$pdf->Ln();
 
-	$pdf->Cell(35,18,$prod->descripcion,1,0);
-	$pdf->Cell(30,18,$prod->precio,1,0);
-	$pdf->Cell(30,18,$pdf->Image('imagenes/'.$prod->imagen,$x,$y,25,10),1,0,'C');
-	$pdf->Cell(30,18,$prod->nombre,1,0);
-	$pdf->Ln();
+			$y+=18;
 
-	$y+=18;
+		
+	}
+
+	$pdf->Output();
+
+} catch (Exception $e) {
+
+	echo "error al imprimir el pdf: ".$e->getMessage();
 }
-
-$pdf->Output();

@@ -37,33 +37,16 @@ require_once("Helper.php");
 		$imagen = $_FILES["imagen"];
 
 		$validar = new Helper;
-		print_r($_POST);
-		echo $validar->validator($_POST)->validate();
-		$valido = $validar->validator($_POST)->validate();
-
-		/*if (!is_string($nombre) || is_numeric($nombre)) {
 		
-			$error = "El campo nombre es invalido!";
-			$valido = false;
-		
-		}elseif (!is_numeric($precio) || floatval($precio) < 0) {
-			
-			$error = "El campo precio es invalido!";
-			$valido = false;
-			
-		}elseif (!is_int(intval($existencia))) {
-			
-			$error = "El campo existencia es invalido!";
-			$valido = false;
+		$error = $validar->validarImagen($imagen["type"])->message();
 
-		}elseif ($imagen["type"] != "image/jpeg" && $imagen["type"] != "image/jpg" && $imagen["type"] != "image/png"){
-			
-			$error = "Por favor adjunte una imagen con formato: JPG/JPEG/PNG!";
-			$valido = false;
+		$error = $validar->validarDigito("existencia",$existencia)->message();
 
-			}*/
+		$error = $validar->validarNumero("precio",$precio)->message();
 
-		if ($valido) {
+		$error = $validar->validarString("nombre",$nombre)->message();
+
+		if (!isset($error)) {
 
 			$existeCodigo = $producto->buscarCodigo($codigo);
 
@@ -104,7 +87,7 @@ require_once("Helper.php");
 
 	if( isset($_POST["actualizar"]) ){
 
-		$usuario = $_POST["usuario"];
+		$usuarioId = $_POST["usuario"];
 		$codigo = $_POST["codigo"];
 		$nombre = $_POST["nombre"];
 		$categoria = $_POST["categoria"];
@@ -112,6 +95,18 @@ require_once("Helper.php");
 		$existencia = $_POST["existencia"];
 		$imagen = $_FILES["imagen"];
 		$id = $_POST["id"];
+
+		$validar = new Helper;
+
+		$error = !empty($imagen["type"]) ? $validar->validarImagen($imagen["type"])->message() : NULL;
+
+		$error = $validar->validarDigito("existencia",$existencia)->message();
+
+		$error = $validar->validarNumero("precio",$precio)->message();
+
+		$error = $validar->validarString("nombre",$nombre)->message();
+
+		if (!isset($error)) {
 
 			if( $imagen["error"] == 0 ){
 
@@ -124,12 +119,16 @@ require_once("Helper.php");
 					copy($imagen["tmp_name"], $base.$rutaImagen);
 				}
 
-		  		$producto->actualizar($id,$usuario,$codigo,$nombre,$categoria,$precio,$existencia,$rutaImagen);
+		  		$producto->actualizar($id,$usuarioId,$codigo,$nombre,$categoria,$precio,$existencia,$rutaImagen);
+	  		}else{
+
+
+	  		$producto->actualizar($id,$usuarioId,$codigo,$nombre,$categoria,$precio,$existencia);
 	  		}
 
-	  		$producto->actualizar($id,$usuario,$codigo,$nombre,$categoria,$precio,$existencia);
 
 			header("location:index.php?actualizado=true");
+		}
 		
 	}
 
@@ -196,7 +195,15 @@ require_once("Helper.php");
 			<div class="col-6">
 				<div class="card mt-4">
 					<div class="card-header card-header-primary text-center">
-						<h2 class="text-center card-title"><?php  if(isset($productoModificar)): echo "Usuario: ".$productoModificar->nombre; else: echo "Usuario: ".$usuario->nombre; endif; ?></h2>
+						<h2 class="text-center card-title">
+							<?php  if(isset($productoModificar)): 
+										echo "Usuario: ".$productoModificar->nombre; 
+								   else:
+							 			echo "Usuario: ".$usuario->nombre;
+							 	   endif;
+							 ?>
+							 	
+						</h2>
 					</div>
 					<div class="card-body">
 						<form class="form" method="POST" enctype="multipart/form-data">

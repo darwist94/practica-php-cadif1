@@ -139,7 +139,7 @@ require_once("Models/Categoria.php");
 				  </div>
 				  <div class="card-body">
 					    <h4 class="card-title">Listado de productos</h4>
-					    <form class="form" method="POST">
+					    <form class="form" method="POST" action="index.php">
 					    	<table class="table table-hover">
 							<thead>
 								<th>Nombre Producto</th>
@@ -196,6 +196,7 @@ require_once("Models/Categoria.php");
 			<div class="card card-nav-tabs">
 			  <h4 class="card-header card-header-primary">Lista de Categoria</h4>
 			  <div class="card-body">
+			  	<h4 class="card-title text-center">Filtrar productos por categoria</h4>
 			  		<table class="table table-hover">
 						<thead>
 							<th class="text-center">Nombre</th>
